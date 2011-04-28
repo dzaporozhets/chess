@@ -1,7 +1,7 @@
 module Chess
-  class King < Piece
+  class Pawn < Piece
     def draw
-      "K"
+      "p"
     end
   end
 end

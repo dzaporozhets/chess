@@ -1,7 +1,7 @@
 module Chess
-  class King < Piece
+  class Bishop < Piece
     def draw
-      "K"
+      "B"
     end
   end
 end
