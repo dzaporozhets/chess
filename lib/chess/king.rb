@@ -3,5 +3,9 @@ module Chess
     def draw
       "K"
     end
+
+    def move_allowed?
+      false
+    end
   end
 end

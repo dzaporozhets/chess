@@ -3,7 +3,6 @@ require "lib/chess"
 class Game
   def initialize
     @board = Chess::Board.new
-    start
   end
 
   def start
