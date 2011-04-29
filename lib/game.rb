@@ -1,6 +1,9 @@
 require "lib/chess"
+require "lib/color"
 
 class Game
+  include Color
+
   def initialize
     @board = Chess::Board.new
   end
@@ -10,13 +13,13 @@ class Game
     
     loop do
       color = colors.last
-      puts "\033[92m#{color}\033[0m - Tour turn: "
+      puts green("#{color} - Tour turn: ")
 
       @board.draw
       if user_input(color)
         colors.reverse!
       else 
-        puts "\033[91mWrong turn!\033[0m"
+        puts red("Wrong turn!")
       end
     end
   end

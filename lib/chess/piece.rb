@@ -1,5 +1,7 @@
 module Chess
   class Piece
+    include Color
+
     attr_reader :position, :old_postions, :color
 
     def initialize(color, pos)
@@ -15,7 +17,7 @@ module Chess
     def do_move(to)
       @old_positions << @position
       @position = to
-      puts "#{self.object_id} moved from #{@old_positions.last} to #{@position}"
+      puts "#{self.class.name} moved from #{@old_positions.last} to #{@position}"
       true
     end
 
@@ -32,9 +34,7 @@ module Chess
     end
 
     def draw_with_color
-      @color == :white ? 
-        "\033[0m#{draw}\033[0m" : 
-        "\033[90m#{draw}\033[0m"
+      @color == :white ? draw : gray(draw)
     end
 
     def draw

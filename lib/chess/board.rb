@@ -2,7 +2,9 @@ module Chess
   class Board
     attr_accessor :pieces
 
-    def initialize 
+    def initialize
+      #@squares = build_squares
+
       @pieces = [
         Bishop.new(:black, :c8), 
         Bishop.new(:white, :c1),
@@ -32,6 +34,16 @@ module Chess
         end
       end
     end
+
+    #def build_squares
+      #squares = []
+      #(1..8).each do |d| 
+        #("a".."h").each do |l|
+          #squares << Square.new(l, d)
+        #end
+      #end
+      #squares
+    #end
 
     def draw 
       puts "Draw board"

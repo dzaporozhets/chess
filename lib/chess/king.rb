@@ -4,8 +4,8 @@ module Chess
       "K"
     end
 
-    def move_allowed?
-      false
+    def move_allowed?(to)
+      true
     end
   end
 end
