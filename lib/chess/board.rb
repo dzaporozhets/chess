@@ -1,49 +1,18 @@
 module Chess
   class Board
-    attr_accessor :pieces
+    attr_reader :pieces, :squares
 
-    def initialize
-      #@squares = build_squares
-
-      @pieces = [
-        Bishop.new(:black, :c8), 
-        Bishop.new(:white, :c1),
-        Bishop.new(:black, :f8), 
-        Bishop.new(:white, :f1),
-
-        Knight.new(:black, :b8), 
-        Knight.new(:white, :b1),
-        Knight.new(:black, :g8), 
-        Knight.new(:white, :g1),
-
-        Rook.new(:black, :a8), 
-        Rook.new(:white, :a1),
-        Rook.new(:black, :h8), 
-        Rook.new(:white, :h1),
-
-        Queen.new(:black, :d8), 
-        Queen.new(:white, :d1),
-        King.new(:black, :e8), 
-        King.new(:white, :e1)
-      ]
-
-      [:black, :white].each do |color|
-        ("a".."h").each do |ih|
-          iv = (color == :white) ? 2 : 7
-          @pieces << Pawn.new(color, "#{ih}#{iv}".to_sym)
-        end
-      end
+    def initialize(empty = false)
+      @squares = Chess::Factory.build_squares
+      @pieces = empty ? [] : Chess::Factory.build_pieces(self) 
     end
 
-    #def build_squares
-      #squares = []
-      #(1..8).each do |d| 
-        #("a".."h").each do |l|
-          #squares << Square.new(l, d)
-        #end
-      #end
-      #squares
-    #end
+    def add_piece(piece)
+      if piece.respond_to?(:board)
+        @pieces << piece
+        piece.board = self
+      end
+    end
 
     def draw 
       puts "Draw board"
@@ -56,11 +25,11 @@ module Chess
     end
 
     def find_piece_by_color(color, pos)
-      pieces.select { |piece| piece.color?(color) && piece.pos?(pos) }.first
+      @pieces.select { |piece| piece.color?(color) && piece.pos?(pos) }.first
     end
 
     def find_piece(pos)
-      pieces.select { |piece| piece.pos?(pos.to_sym) }.first
+      @pieces.select { |piece| piece.pos?(pos.to_sym) }.first
     end
 
     def draw

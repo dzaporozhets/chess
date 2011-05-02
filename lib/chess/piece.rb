@@ -3,11 +3,13 @@ module Chess
     include Color
 
     attr_reader :position, :old_postions, :color
+    attr_accessor :board
 
-    def initialize(color, pos)
+    def initialize(color, pos, board = nil)
       @color = color
       @position = pos
       @old_positions = []
+      @board = board
     end
 
     def move(to)
