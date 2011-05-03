@@ -10,6 +10,7 @@ module Chess
     def add_piece(piece)
       if piece.respond_to?(:board)
         @pieces << piece
+        @squares.select { |s| s.name == piece.position }.first.push(piece)
         piece.board = self
       end
     end

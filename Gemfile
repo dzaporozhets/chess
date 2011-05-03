@@ -3,3 +3,4 @@ source "http://rubygems.org"
 
 gem "ruby-debug"
 gem "rspec", "2.5.0"
+gem "awesome_print"
