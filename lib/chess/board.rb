@@ -1,17 +1,24 @@
 module Chess
   class Board
-    attr_reader :pieces, :squares
+    include Singleton
+    
+    def initialize
+      SquareFactory.instance.build_squares
+      PieceFactory.instance.build_pieces
+    end
 
-    def initialize(empty = false)
-      @squares = Chess::Factory.build_squares
-      @pieces = empty ? [] : Chess::Factory.build_pieces(self) 
+    def squares 
+      SquareFactory.instance
+    end
+
+    def pieces
+      PieceFactory.instance.on_board
     end
 
     def add_piece(piece)
       if piece.respond_to?(:board)
-        @pieces << piece
-        @squares.select { |s| s.name == piece.position }.first.push(piece)
-        piece.board = self
+        SquareFactory.find_by_name(piece.name).add_to_board(self)
+        SquareFactory.instance.find(piece.position).first.push(piece)
       end
     end
 

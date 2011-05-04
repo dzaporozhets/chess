@@ -3,13 +3,15 @@ module Chess
     include Color
 
     attr_reader :position, :old_postions, :color
-    attr_accessor :board
 
-    def initialize(color, pos, board = nil)
+    def initialize(color, pos)
       @color = color
       @position = pos
       @old_positions = []
-      @board = board
+    end
+
+    def name 
+      "#{@color}#{self.class.name}" 
     end
 
     def move(to)
@@ -30,7 +32,7 @@ module Chess
     def available_moves
       moves = calculate_moves
 
-      @board.squares.select do |square| 
+      Board.instance.squares.select do |square| 
         moves.include?(square.name) && square.empty?
       end.map(&:name)
     end

@@ -20,7 +20,7 @@ describe Chess::King do
     #   d e f g h
     describe "simple rules" do 
       before(:each) do 
-        @board = Chess::Board.new(true)
+        @board = Chess::Board.instance
         @king = Chess::King.new(:white, :f5)
         @board.add_piece(@king)
       end
