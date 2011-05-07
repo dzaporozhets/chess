@@ -5,7 +5,7 @@ module Chess
 
     attr_reader :squares
 
-    def initialize 
+    def reset
       @squares = []
     end
 
@@ -28,6 +28,10 @@ module Chess
         end
       end
       @squares
+    end
+
+    def squares_names
+      @squares.map(&:name)
     end
   end
 end

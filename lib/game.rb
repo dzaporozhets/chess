@@ -3,9 +3,11 @@ require "lib/color"
 
 class Game
   include Color
+  include Singleton
 
-  def initialize
-    @board = Chess::Board.new
+  def init
+    @board = Chess::Board.instance
+    @board.init
   end
 
   def start

@@ -21,8 +21,9 @@ describe Chess::King do
     describe "simple rules" do 
       before(:each) do 
         @board = Chess::Board.instance
+        @board.init(true)
+
         @king = Chess::King.new(:white, :f5)
-        @board.add_piece(@king)
       end
 
       it "should succesfully move piece to correct square" do 

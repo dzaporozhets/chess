@@ -8,6 +8,19 @@ module Chess
       @color = color
       @position = pos
       @old_positions = []
+      add_to_square
+    end
+
+    def board
+      Board.instance
+    end
+
+    def add_to_square
+      board.squares.find(@position).first.push(self)
+    end
+
+    def remove_from_square
+      board.squares.find(@position).first.pop
     end
 
     def name 
@@ -18,9 +31,15 @@ module Chess
       do_move(to) if move_allowed?(to)
     end
 
-    def do_move(to)
+    def switch_position(to)
       @old_positions << @position
       @position = to
+    end
+
+    def do_move(to)
+      remove_from_square
+      switch_position(to)
+      add_to_square
       puts "#{self.class.name} moved from #{@old_positions.last} to #{@position}"
       true
     end
@@ -46,7 +65,7 @@ module Chess
     end
 
     def draw_with_color
-      @color == :white ? draw : gray(draw)
+      @color == :white ? draw : black(draw)
     end
 
     def draw
@@ -70,6 +89,10 @@ module Chess
     
     def letters
       @letters ||= ("a".."z").to_a
+    end
+
+    def calculate_moves
+      SquareFactory.instance.squares_names.reject {|x| x == @position}
     end
   end
 end

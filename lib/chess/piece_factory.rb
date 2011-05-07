@@ -5,7 +5,7 @@ module Chess
 
     attr_reader :pieces, :pieces_on_board
 
-    def initialize 
+    def reset
       @pieces = []
       @pieces_on_board = []
     end
@@ -53,7 +53,7 @@ module Chess
         end
       end
 
-      @pieces = @pieces_on_board
+      @pieces_on_board = @pieces
     end
   end
 end

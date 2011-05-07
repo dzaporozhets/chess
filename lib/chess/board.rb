@@ -1,10 +1,17 @@
 module Chess
   class Board
     include Singleton
-    
-    def initialize
+    include Color
+
+    def init(empty = false)
+      reset
       SquareFactory.instance.build_squares
-      PieceFactory.instance.build_pieces
+      PieceFactory.instance.build_pieces unless empty
+    end
+
+    def reset
+      SquareFactory.instance.reset
+      PieceFactory.instance.reset
     end
 
     def squares 
@@ -13,13 +20,6 @@ module Chess
 
     def pieces
       PieceFactory.instance.on_board
-    end
-
-    def add_piece(piece)
-      if piece.respond_to?(:board)
-        SquareFactory.find_by_name(piece.name).add_to_board(self)
-        SquareFactory.instance.find(piece.position).first.push(piece)
-      end
     end
 
     def draw 
@@ -33,28 +33,27 @@ module Chess
     end
 
     def find_piece_by_color(color, pos)
-      @pieces.select { |piece| piece.color?(color) && piece.pos?(pos) }.first
+      pieces.select { |piece| piece.color?(color) && piece.pos?(pos) }.first
     end
 
     def find_piece(pos)
-      @pieces.select { |piece| piece.pos?(pos.to_sym) }.first
+      pieces.select { |piece| piece.pos?(pos.to_sym) }.first
     end
 
     def draw
       (1..8).to_a.reverse.each do |iv|
-        print "#{iv}. " 
+        puts 
+        print "#{gray(iv)}. " 
         ("a".."h").each do |ih|
-          print "|"
-
-          pos = "#{ih}#{iv}"
-          figure = find_piece(pos)
-          print figure ? figure.draw_with_color : " "
+          print "  "
+          print squares.find("#{ih}#{iv}".to_sym).first.draw
         end
-        print "|"
+        print "   "
         puts
         if iv == 1
+          puts
           print "   "
-          ("a".."h").each { |ihn| print " #{ihn}" }
+          ("a".."h").each { |ihn| print "   #{gray(ihn)} " }
         end
       end
       puts

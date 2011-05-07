@@ -2,6 +2,7 @@ require "spec"
 
 describe Chess::Square do
   before(:each) do 
+    Chess::Board.instance.init
     @square = Chess::Square.new("a",1)
   end
 
